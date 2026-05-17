@@ -1,6 +1,7 @@
 import pytest
 import sys
 import os
+import responses
 
 # Adiciona o diretório raiz ao path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -39,3 +40,23 @@ def test_add_donation_negative_quantity(capsys):
 def test_validate_quantity_zero():
     """Valida caso limite onde a quantidade é zero (não deve ser permitida)."""
     assert validate_quantity(0) is False
+
+# Teste 4: Integração com ViaCEP
+@responses.activate
+def test_add_donation_with_cep():
+    """Valida a integração com a API do ViaCEP usando mock."""
+    # Mock da API ViaCEP
+    responses.add(
+        responses.GET,
+        "https://viacep.com.br/ws/01001000/json/",
+        json={"localidade": "São Paulo", "uf": "SP"},
+        status=200
+    )
+    
+    result = add_donation("Pedro", "Roupas", 10, cep="01001-000")
+    assert result is True
+    
+    donations = list_donations()
+    assert len(donations) == 1
+    assert donations[0]["location"] == "São Paulo - SP"
+    assert donations[0]["donor"] == "Pedro"

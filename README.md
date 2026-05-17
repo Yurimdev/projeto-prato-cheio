@@ -1,5 +1,7 @@
 # Projeto Prato Cheio - Sistema de Gestão de Doações para Bancos de Alimentos
 
+**Acesse o link da aplicação publicada (Deploy):** [Link do Deploy Aqui](#)
+
 ![Versão do App](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-green.svg)
 
@@ -16,6 +18,7 @@ O **Projeto Prato Cheio** é um programa de terminal simples feito em Python. El
 
 ## ⚙️ Funcionalidades
 - **Cadastro de Doações:** Registro de quem doou, o que foi doado e a quantidade.
+- **Integração ViaCEP:** Busca automática de cidade e estado informando o CEP do doador.
 - **Lista de Estoque:** Veja em uma lista simples tudo o que já foi coletado.
 - **Filtro de Erros:** O sistema bloqueia automaticamente entradas com quantidades inválidas.
 
@@ -56,12 +59,23 @@ pip install -r requirements.txt
 
 *Adicionar nova doação:*
 ```bash
-python src/main.py add --donor "Padaria São João" --item "Pães variados" --qty 50
+python src/main.py add --donor "Padaria São João" --item "Pães variados" --qty 50 --cep 01001000
 ```
 
 *Listar todas as doações:*
 ```bash
 python src/main.py list
+```
+
+---
+
+## ☁️ Como Executar na Nuvem (Deploy via Docker)
+
+O projeto está configurado com um `Dockerfile` pronto para ser publicado em plataformas de containers, como **Render**, **Railway** ou **Fly.io**. Para rodar a imagem Docker localmente:
+
+```bash
+docker build -t prato-cheio .
+docker run -it prato-cheio list
 ```
 
 ---

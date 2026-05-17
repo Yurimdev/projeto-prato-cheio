@@ -29,7 +29,7 @@ def reset_db():
     """Limpa o arquivo de dados (usado pelos testes)."""
     save_db([])
 
-def add_donation(donor: str, item: str, quantity: int) -> bool:
+def add_donation(donor: str, item: str, quantity: int, cep: str = None) -> bool:
     """Adiciona uma nova doação ao sistema após validação e salva no arquivo."""
     if not donor.strip() or not item.strip():
         print("Erro: Nome do doador e item não podem ser vazios.")
@@ -40,11 +40,11 @@ def add_donation(donor: str, item: str, quantity: int) -> bool:
         return False
     
     db = load_db()
-    entry = format_donation_entry(donor, item, quantity)
+    entry = format_donation_entry(donor, item, quantity, cep)
     db.append(entry)
     save_db(db)
     
-    print(f"Sucesso: Doação de {quantity}x '{item}' por '{donor}' registrada!")
+    print(f"Sucesso: Doação de {quantity}x '{item}' por '{donor}' registrada na localidade: {entry.get('location', 'Local não informado')}!")
     return True
 
 def list_donations() -> List[Dict]:
@@ -57,7 +57,8 @@ def list_donations() -> List[Dict]:
     
     print("\n--- Lista de Doações ---")
     for idx, d in enumerate(db, 1):
-        print(f"{idx}. Doador: {d['donor']} | Item: {d['item']} | Qtd: {d['quantity']}")
+        location = d.get('location', 'Local não informado')
+        print(f"{idx}. Doador: {d['donor']} | Item: {d['item']} | Qtd: {d['quantity']} | Local: {location}")
     print("------------------------\n")
     return db
 
@@ -70,6 +71,7 @@ def main():
     parser_add.add_argument("--donor", required=True, help="Nome do doador")
     parser_add.add_argument("--item", required=True, help="Nome do item doado")
     parser_add.add_argument("--qty", type=int, required=True, help="Quantidade doada")
+    parser_add.add_argument("--cep", required=False, help="CEP do doador para buscar localização (opcional)")
 
     # Comando de listar
     subparsers.add_parser("list", help="Listar doações registradas")
@@ -77,7 +79,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "add":
-        add_donation(args.donor, args.item, args.qty)
+        add_donation(args.donor, args.item, args.qty, args.cep)
     elif args.command == "list":
         list_donations()
     else:
