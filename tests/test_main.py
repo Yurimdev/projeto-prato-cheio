@@ -25,7 +25,7 @@ def test_add_donation_success(capsys):
     
     donations = list_donations()
     assert len(donations) == 1
-    assert donations[0] == {"donor": "Maria", "item": "Arroz", "quantity": 5}
+    assert donations[0] == {"donor": "Maria", "item": "Arroz", "quantity": 5, "location": "Local não informado"}
 
 # Teste 2: Entrada Inválida (Quantidade negativa)
 def test_add_donation_negative_quantity(capsys):
