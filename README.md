@@ -1,6 +1,6 @@
 # Projeto Prato Cheio - Sistema de Gestão de Doações para Bancos de Alimentos
 
-> 🔗 **Aplicação publicada (Deploy):** _<SUBSTITUIR_PELO_LINK_DO_STREAMLIT>_
+> 🔗 **Aplicação publicada (Deploy):** https://projeto-prato-cheio-nqcpqsb73sd3jvfgznfusr.streamlit.app/
 
 ![Versão do App](https://img.shields.io/badge/version-2.0.0-blue.svg)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-green.svg)
