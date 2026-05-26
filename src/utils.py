@@ -7,6 +7,7 @@ def validate_quantity(quantity: int) -> bool:
         return False
     return quantity > 0
 
+
 def format_donation_entry(donor: str, item: str, quantity: int) -> dict:
     """
     Formata os dados da doação em um dicionário estruturado.

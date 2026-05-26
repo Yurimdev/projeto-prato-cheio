@@ -1,6 +1,8 @@
 # Projeto Prato Cheio - Sistema de Gestão de Doações para Bancos de Alimentos
 
-![Versão do App](https://img.shields.io/badge/version-1.0.0-blue.svg)
+> 🔗 **Aplicação publicada (Deploy):** _<SUBSTITUIR_PELO_LINK_DO_STREAMLIT>_
+
+![Versão do App](https://img.shields.io/badge/version-2.0.0-blue.svg)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-green.svg)
 
 ## 📌 O Problema
@@ -18,13 +20,21 @@ O **Projeto Prato Cheio** é um programa de terminal simples feito em Python. El
 - **Cadastro de Doações:** Registro de quem doou, o que foi doado e a quantidade.
 - **Lista de Estoque:** Veja em uma lista simples tudo o que já foi coletado.
 - **Filtro de Erros:** O sistema bloqueia automaticamente entradas com quantidades inválidas.
+- **Enriquecimento via API pública (Open Food Facts):** Ao registrar um item, o sistema consulta a API e traz **marca, categoria e Nutri-Score** do alimento, ajudando a ONG a entender melhor o que recebe.
+- **Interface Web:** Além do CLI, há uma aplicação web (Streamlit) publicada na nuvem.
 
+## 🌐 Integração com API Pública (Open Food Facts)
+A aplicação consome a API aberta **[Open Food Facts](https://world.openfoodfacts.org/)** (gratuita, sem necessidade de chave). A cada doação registrada, o sistema faz uma requisição `HTTP GET` ao endpoint de busca e utiliza os dados retornados (produto, marca, categoria e Nutri-Score) para enriquecer o cadastro do item.
 
+A lógica de integração está isolada em [`src/api.py`](src/api.py) e é validada por um **teste de integração** em [`tests/test_integration.py`](tests/test_integration.py), que simula (mock) a resposta da API para garantir que o fluxo de dados não quebre a aplicação.
 
 ## 🛠️ Tecnologias Utilizadas
 - **Linguagem:** Python 3.8+
-- **Testes Automatizados:** `pytest`
+- **Interface Web / Deploy:** `streamlit`
+- **Consumo de API:** `requests`
+- **Testes Automatizados:** `pytest` (unitários + integração)
 - **Linting e Análises Estáticas:** `flake8`
+- **CI/CD:** GitHub Actions (lint + testes a cada push/PR)
 
 ---
 
@@ -63,6 +73,22 @@ python src/main.py add --donor "Padaria São João" --item "Pães variados" --qt
 ```bash
 python src/main.py list
 ```
+
+*Consultar dados de um alimento na API pública (Open Food Facts):*
+```bash
+python src/main.py info --item "Arroz"
+```
+
+---
+
+## 🌍 Como Executar a Interface Web (Streamlit)
+
+A versão web reaproveita a mesma lógica de validação e a integração com a API.
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+A aplicação também está publicada na nuvem — veja o link no topo deste README.
 
 ---
 
@@ -119,6 +145,6 @@ Abaixo está o print da execução dos comandos no terminal:
 ## 📄 Autoria e Licença
 
 - **Autor:** Yuri Vinicius Pereira Martins (RA: 22504945)
-- **Disciplina:** Bootcamp II - Entrega Inicial
-- **Versão:** 1.0.0
+- **Disciplina:** Bootcamp II - Entrega Intermediária
+- **Versão:** 2.0.0
 - **Licença:** Todos os direitos reservados. Confira o arquivo `LICENSE` para mais detalhes.
