@@ -63,6 +63,26 @@ CSS = """
 }
 .pc-item .pc-title {font-weight: 600; color: #1b3a2b;}
 .pc-item .pc-meta {color: #5f6b63; font-size: 0.88rem; margin-top: 0.25rem;}
+
+/* Campos de entrada com borda visivel */
+div[data-baseweb="input"],
+div[data-baseweb="base-input"] {
+    background-color: #ffffff !important;
+    border: 1.6px solid #2e7d32 !important;
+    border-radius: 6px !important;
+}
+div[data-baseweb="input"] input {
+    background-color: #ffffff !important;
+    color: #1b2620 !important;
+}
+div[data-baseweb="input"]:focus-within {
+    border-color: #1b5e20 !important;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.20) !important;
+}
+.stTextInput label, .stNumberInput label {
+    font-weight: 600 !important;
+    color: #1b3a2b !important;
+}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
